@@ -1,0 +1,17 @@
+name: 'rl-course'
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - grpcio
+  - ipykernel
+  - ipywidgets
+  - matplotlib
+  - graphviz
+  - pip
+  - python=3.8
+  - pip:
+    - gym
+    - "ray[rllib]"
+    - torch
+    - torchvision
