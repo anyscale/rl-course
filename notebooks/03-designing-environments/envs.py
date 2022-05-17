@@ -85,3 +85,15 @@ class Maze(FrozenPond):
                     print(".", end="")
                 # print("O", end="")
             print()
+            
+class RandomMaze(Maze):
+    def reset(self):
+        self.player = (0, 0) # the player starts at the top-left
+        self.exit = (3, 3)   # exit is at the bottom-right
+        
+        self.walls = np.random.rand(4, 4) < 0.2
+        
+        return 0 # the observation corresponding to (0,0)
+    
+    def done(self):
+        return self.player == self.exit
