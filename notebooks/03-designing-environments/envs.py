@@ -60,9 +60,9 @@ class FrozenPond(gym.Env):
                 elif (i,j) == self.player:
                     print("P", end="")
                 elif self.holes[i,j]:
-                    print("H", end="")
+                    print("O", end="")
                 else:
-                    print("F", end="")
+                    print(".", end="")
             print()
             
 class Maze(FrozenPond):
@@ -92,6 +92,8 @@ class RandomMaze(Maze):
         self.exit = (3, 3)   # exit is at the bottom-right
         
         self.walls = np.random.rand(4, 4) < 0.2
+        self.walls[self.player] = 0
+        self.walls[self.exit] = 0
         
         return 0 # the observation corresponding to (0,0)
     
@@ -103,6 +105,8 @@ class RandomLake(FrozenPond):
         self.player = (0, 0) # the player starts at the top-left
         self.exit = (3, 3)   # exit is at the bottom-right
         
-        self.walls = np.random.rand(4, 4) < 0.2
+        self.holes = np.random.rand(4, 4) < 0.2
+        self.holes[self.player] = 0  # no hole at start location
+        self.holes[self.exit] = 0    # no hole at exit location
         
         return 0 # the observation corresponding to (0,0)
