@@ -17,7 +17,7 @@ class FrozenPond(gym.Env):
             [1,0,0,0]  # HFFF
         ])
         
-        return 0 # the observation corresponding to (0,0)
+        return self.observation()
     
     def observation(self):
         return 4*self.player[0] + self.player[1]
@@ -95,7 +95,7 @@ class RandomMaze(Maze):
         self.walls[self.player] = 0
         self.walls[self.exit] = 0
         
-        return 0 # the observation corresponding to (0,0)
+        return self.observation()
     
     def done(self):
         return self.player == self.exit
@@ -109,4 +109,21 @@ class RandomLake(FrozenPond):
         self.holes[self.player] = 0  # no hole at start location
         self.holes[self.exit] = 0    # no hole at exit location
         
-        return 0 # the observation corresponding to (0,0)
+        return self.observation()
+    
+class RandomLakeObs(RandomLake):
+    def __init__(self, env_config=None):
+        self.observation_space = gym.spaces.MultiDiscrete([2,2,2,2])
+        self.action_space = gym.spaces.Discrete(4)      
+    
+    def observation(self):
+        i, j = self.player
+
+        obs = []
+        obs.append(1 if j==0 else self.holes[i,j-1]) # left
+        obs.append(1 if i==3 else self.holes[i+1,j]) # down
+        obs.append(1 if j==3 else self.holes[i,j+1]) # right
+        obs.append(1 if i==0 else self.holes[i-1,j]) # up
+        
+        obs = np.array(obs, dtype=int) # this line is optional, helps readability of output
+        return obs
