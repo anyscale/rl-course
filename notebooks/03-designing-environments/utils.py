@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
 
-def action_dist(trainer, env, obs, actions=None):
+def query_policy(trainer, env, obs, actions=None):
     policy = trainer.get_policy()
     model = policy.model    
     prep = get_preprocessor(env.observation_space)(env.observation_space)

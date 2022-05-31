@@ -8,7 +8,7 @@ class FrozenPond(gym.Env):
         
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
-        self.exit = (3, 3)   # exit is at the bottom-right
+        self.goal = (3, 3)   # goal is at the bottom-right
         
         self.holes = np.array([
             [0,0,0,0], # FFFF 
@@ -23,10 +23,10 @@ class FrozenPond(gym.Env):
         return 4*self.player[0] + self.player[1]
     
     def reward(self):
-        return int(self.player == self.exit)
+        return int(self.player == self.goal)
     
     def done(self):
-        return self.player == self.exit or self.holes[self.player] == 1
+        return self.player == self.goal or self.holes[self.player] == 1
     
     def is_valid_loc(self, location):
         return 0 <= location[0] <= 3 and 0 <= location[1] <= 3
@@ -50,15 +50,15 @@ class FrozenPond(gym.Env):
             self.player = new_loc
         
         # Return observation/reward/done
-        return self.observation(), self.reward(), self.done(), {}
+        return self.observation(), self.reward(), self.done(), {"player" : self.player, "goal" : self.goal}
     
     def render(self):
         for i in range(4):
             for j in range(4):
-                if (i,j) == self.exit:
-                    print("G", end="")
-                elif (i,j) == self.player:
+                if (i,j) == self.player:
                     print("P", end="")
+                elif (i,j) == self.goal:
+                    print("G", end="")
                 elif self.holes[i,j]:
                     print("O", end="")
                 else:
@@ -67,7 +67,7 @@ class FrozenPond(gym.Env):
             
 class Maze(FrozenPond):
     def done(self):
-        return self.player == self.exit
+        return self.player == self.goal
     def is_valid_loc(self, location):
         return 0 <= location[0] <= 3 and 0 <= location[1] <= 3 and not self.holes[location]
 
@@ -75,7 +75,7 @@ class Maze(FrozenPond):
     def render(self):
         for i in range(4):
             for j in range(4):
-                if (i,j) == self.exit:
+                if (i,j) == self.goal:
                     print("G", end="")
                 elif (i,j) == self.player:
                     print("P", end="")
@@ -89,25 +89,25 @@ class Maze(FrozenPond):
 class RandomMaze(Maze):
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
-        self.exit = (3, 3)   # exit is at the bottom-right
+        self.goal = (3, 3)   # goal is at the bottom-right
         
         self.walls = np.random.rand(4, 4) < 0.2
         self.walls[self.player] = 0
-        self.walls[self.exit] = 0
+        self.walls[self.goal] = 0
         
         return self.observation()
     
     def done(self):
-        return self.player == self.exit
+        return self.player == self.goal
 
 class RandomLake(FrozenPond):
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
-        self.exit = (3, 3)   # exit is at the bottom-right
+        self.goal = (3, 3)   # goal is at the bottom-right
         
         self.holes = np.random.rand(4, 4) < 0.2
         self.holes[self.player] = 0  # no hole at start location
-        self.holes[self.exit] = 0    # no hole at exit location
+        self.holes[self.goal] = 0    # no hole at goal location
         
         return self.observation()
     
