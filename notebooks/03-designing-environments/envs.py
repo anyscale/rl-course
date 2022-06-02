@@ -127,3 +127,13 @@ class RandomLakeObs(RandomLake):
         
         obs = np.array(obs, dtype=int) # this line is optional, helps readability of output
         return obs
+    
+class RandomLakeObsRew(RandomLakeObs):
+    def reward(self):
+        return 6-(abs(self.player[0]-self.goal[0]) + abs(self.player[1]-self.goal[1]))
+    
+class RandomLakeObsTest(RandomLakeObs):
+    def reward(self):
+        goal_rew = int(self.player == self.goal)
+        hole_rew = 0.1*(1-self.holes[self.player])
+        return goal_rew + hole_rew
