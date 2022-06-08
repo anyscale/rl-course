@@ -5,6 +5,10 @@ from utils import create_slide_file, copy_img_sources
 from utils import get_slide_main, parse_exercise
 
 
+MC = "<!-- multiple choice -->"
+CE = "<!-- coding exercise -->"
+
+
 create_chapter_folders()
 create_exercise_folder()
 modules = get_modules()
@@ -50,17 +54,16 @@ for module in modules:
         # Write the markdown file containing the actual slide content
         create_slide_file(slide_file_name, slide_cells)
 
-        # Next, focus on exercises
-        MC = "<!-- multiple choice -->"
-        CE = "<!-- coding exercise -->"
+        # Next, focus on MC and coding exercises
         for ex_group in ex_cells:
-            if MC in ex_group[0]["source"] or CE in ex_group[0]["source"]:
+            first_source = ex_group[0]["source"]
+            if MC in first_source or CE in first_source:
                 content = parse_exercise(ex_group, content, module_count, exercise_count)
                 exercise_count += 1
 
         notebook_count += 1
 
+    # Then write all the module content and move on to the next.
     with open(os.path.join(chapters_path, f"{module_name}.md"), "w") as meta:
         meta.write(content)
-
     module_count += 1

@@ -3,15 +3,11 @@ import shutil
 import os
 import nbformat
 
+NB_VERSION = 4
 TOP_LEVEL = "## "
 SECTION = "####"
-
+SLIDE_HEADER = """---\ntype: slides\n---\n\n"""
 TEST_TEMPLATE = "from wasabi import msg\nfrom black import format_str, FileMode\n\nfile_mode = FileMode()\n\ndef blacken(code):\n    try:\n        return format_str(code, mode=file_mode)\n    except:\n        return code\n\n__msg__ = msg\n__solution__ = blacken(\"\"\"${solution}\"\"\")\n\n${solution}\n\n${test}\n\ntry:\n    test()\nexcept AssertionError as e:\n    __msg__.fail(e)"
-
-
-SLIDE_HEADER = """---
-type: slides
----\n\n"""
 
 base_path = os.path.abspath(".")
 static_path = os.path.join(base_path, "static")
@@ -23,11 +19,13 @@ exercise_path = os.path.join(base_exercise_path, "en")
 
 
 def create(path):
+    """Create a path if it doesn't exist."""
     if not os.path.exists(path):
         os.mkdir(path)
 
 
 def create_chapter_folders():
+    """Create all chapter- and slide-specific folders."""
     chapters = os.path.join(base_path, "chapters")
     create(chapters)
     create(chapters_path)
@@ -35,16 +33,19 @@ def create_chapter_folders():
 
 
 def create_exercise_folder():
+    """Create all exercise folder."""
     create(base_exercise_path)
     create(exercise_path)
 
 
 def create_slide_folder(module):
+    """Create folders for each module's slides."""
     slides_module = os.path.join(slides_path, module)
     create(slides_module)
 
 
 def copy_img_sources(module, module_name):
+    """Copy all image source files to the 'static' folder, so that Gatsby can reference them."""
     create(os.path.join(static_path, module_name))
     module_img_folder = os.path.join(static_path, module_name, "img")
     create(module_img_folder)
@@ -54,21 +55,21 @@ def copy_img_sources(module, module_name):
 
 
 def get_modules():
-    # hack to seach for "notebooks/0x_foo_bar"
+    """Get all notebook modules, i.e. those of the form 'notebooks/0x_foo_bar' """
     modules = [f.path for f in os.scandir(notebook_path) if f.is_dir() if "/0" in f.path]
     modules.sort()
-
     return modules
 
 
 def get_notebook(nb_source):
+    """Return a notebook source via nbformat."""
     with open(nb_source) as f:
-        NB_VERSION = 4
         nb = nbformat.read(f, NB_VERSION)
     return nb
 
 
 def parse_front_matter(module, module_count, num_modules):
+    """Get a module's YAML front-matter."""
     with open(os.path.join(module, "README.md"), "r") as rm:
         lines = rm.readlines()
     title = lines[0].strip("# ").strip("\n")
@@ -110,6 +111,7 @@ def slides_and_ex(cells):
 
 
 def split_into_sections(cells):
+    """By convention we split notebooks by sections to group slides and exercises."""
     top_cells = [c for c in cells if c['source'].startswith(SECTION)]
     indices = [cells.index(cell) for cell in top_cells] + [10000]  # dummy index
     section_cells = [cells[:indices[0]]]
@@ -121,6 +123,8 @@ def split_into_sections(cells):
 
 
 def get_slide_main(slide_cells, module_name, slide_file_name, exercise_count):
+    """Get the 'exercise' tag for each slide deck in a module,
+    which consists of slides and an optional video."""
     title_cell = slide_cells[0]["source"]
     if not "<!-- video" in title_cell:
         slide_title = title_cell.strip('## ')
@@ -136,6 +140,7 @@ def get_slide_main(slide_cells, module_name, slide_file_name, exercise_count):
 
 
 def create_slide_file(slide_file_name, slide_cells):
+    """Create the reveal.js slide decks embedded in modules."""
     module_name = slide_file_name.split("_")[0]
     slide_file = os.path.join(slides_path, module_name, slide_file_name + ".md")
 
@@ -174,8 +179,7 @@ def create_slide_file(slide_file_name, slide_cells):
 
 
 def strip_ansi_codes(s):
-    """
-    Remove ANSI color codes from a string.
+    """Remove ANSI color codes from a string.
     """
     import re
     return re.sub('\033\\[([0-9]+)(;[0-9]+)*m', '', s)
@@ -218,6 +222,7 @@ def parse_source_code(cell, source, module_name):
 
 
 def replace_images(source, module_name):
+    """Make markdown images proper HTML img tags."""
     import re
     lines = source.split("\n")
     for i, line in enumerate(lines):
@@ -231,6 +236,7 @@ def replace_images(source, module_name):
 
 
 def get_exercise_title(lines, exercise_count):
+    """Strip the title from an exercise cell."""
     title_content = lines[0]
     assert "## " in title_content
     ex_title = title_content.strip("## ")
@@ -239,6 +245,7 @@ def get_exercise_title(lines, exercise_count):
 
 
 def parse_exercise(ex_group, content, module_count, exercise_count):
+    """Parse any exercise type."""
 
     lines = ex_group[0]["source"].split("\n")
     content += get_exercise_title(lines, exercise_count)
