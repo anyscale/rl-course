@@ -52,8 +52,3 @@ npm run dev
 Note that any code changes you do in `src` will immediately be reflected by Gatsby, but
 if you change any of your notebooks, you have to rebuild sources with `python parse_notebooks.py`
 (which does not require to restart `npm run dev`).
-
-
-## Deployment
-
-On netlify set `NODE_VERSION` to `14` and `PYTHON_VERSION` to `3.8` to make the build work.
