@@ -55,7 +55,21 @@ if you change any of your notebooks, you have to rebuild sources with `python pa
 
 ## Deployment on Netlify
 
-Connect Netlify to the GitHub remote of this project,
+We've created a second [GitHub remote]() for this project to deploy the site on Netlify
+(and pass by the policy of having to beg someone several times to allow the Netlify integration).
+After cloning this repo, please type:
+
+```shell
+git remote add netlify git@github.com:maxpumperla/anyscale-rl-course.git
+```
+
+so that you can push your local changes to both `anyscale/rl-course` and this remote by pushing as follows:
+
+```shell
+git push origin master && git push netlify master
+```
+
+Alternatively, connect Netlify to the "official" GitHub remote of this project,
 then set `NODE_VERSION` to `14` and `PYTHON_VERSION` to `3.8` as shown below,
 and then deploy.
 
