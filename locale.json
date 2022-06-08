@@ -1,0 +1,48 @@
+{
+    "en": {
+        "langName": "English",
+        "title": "Applied Reinforcement Learning with RLlib",
+        "slogan": "Learn applied reinforcement with Ray RLlib",
+        "description": "This course teaches you the basics of reinforcement learning in an applied fashion, by leveraging the production-grade RL framework Ray RLlib. Enjoy!",
+        "bio": "© 2022. Proudly built by the Ray team. Course material by Mike Gelbart. Course platform based on the [spacy course](https://github.com/ines/course-starter-python) by Max Pumperla.",
+        "footerLinks": [
+            { "text": "Website",
+                "url": "https://applied-rl-course.netlify.app/"
+           },
+            {
+                "text": "Source Code",
+                "url": "https://github.com/ray-project/ray"
+            },
+           {
+               "text": "Course Platform",
+                "url": "https://github.com/ines/course-starter-python"
+            }
+        ],
+        "socialImage": "social.png",
+        "uiText": {
+            "aboutMe": "About the team",
+            "aboutCourse": "About this course",
+            "markAsCompleted": "Mark as completed",
+            "removeFromCompleted": "Remove from completed",
+            "completed": "Completed",
+            "submit": "Submit",
+            "correct": "That's correct!",
+            "incorrect": "Incorrect.",
+            "showSolution": "Show solution",
+            "reset": "Reset",
+            "runCode": "Run code",
+            "next": "Next",
+            "showHints": "Show hints",
+            "hideHints": "Hide hints",
+            "loading": " ",
+            "connectingFailed": "Connecting failed. Please reload and try again.",
+            "launchingDocker": "Launching Docker container on",
+            "reconnectingDocker": "Reconnecting to Docker container on",
+            "prevChapter": "Previous Chapter",
+            "nextChapter": "Next Chapter",
+            "start": "Start",
+            "video": "Video",
+            "slides": "Slides"
+        }
+    }
+}

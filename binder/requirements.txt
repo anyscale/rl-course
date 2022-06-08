@@ -1,1 +1,5 @@
-wasabi>=0.2.1,<1.1.0
+nbformat
+ray[rllib]
+torch
+matplotlib
+wasabi

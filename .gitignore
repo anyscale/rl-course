@@ -69,3 +69,13 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+# Don't commit Python-generated files
+chapters
+exercises
+static/module*
+
+# Python virtual envs and caches
+__pycache__
+env
+venv
