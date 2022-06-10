@@ -5,6 +5,8 @@ from utils import create_slide_file, copy_img_sources
 from utils import get_slide_main, parse_exercise
 
 
+# TODO: make sure all exercise content is transformed from md to html, e.g. code, italics, bold etc.
+#    is there a library for that?
 MC = "<!-- multiple choice -->"
 CE = "<!-- coding exercise -->"
 
