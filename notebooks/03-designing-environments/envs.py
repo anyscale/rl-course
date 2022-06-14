@@ -166,10 +166,10 @@ class RandomLakeObsRew2(RandomLakeObs): # this one should work
     
     def reward(self, action):
         reward = 0
-        if action in (0,3): # up, left
-            reward -= 0.2
-        elif action in (1,2): #down, right
-            reward -= 0.1
+        if action in (0,3): # left, up
+            reward -= 0.02
+        elif action in (1,2): # down, right
+            reward -= 0.01
         
         if self.player == self.goal:
             reward += 1
