@@ -26,7 +26,8 @@ class FrozenPond(gym.Env):
         return int(self.player == self.goal)
     
     def done(self):
-        return self.player == self.goal or self.holes[self.player] == 1
+        return self.player == self.goal or bool(self.holes[self.player] == 1)
+        # cast from numpy.bool to bool because of the RLlib check_env
     
     def is_valid_loc(self, location):
         return 0 <= location[0] <= 3 and 0 <= location[1] <= 3
