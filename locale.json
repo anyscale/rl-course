@@ -4,7 +4,7 @@
         "title": "Applied Reinforcement Learning with RLlib",
         "slogan": "Learn applied reinforcement with Ray RLlib",
         "description": "This course teaches you the basics of reinforcement learning in an applied fashion, by leveraging the production-grade RL framework Ray RLlib. Enjoy!",
-        "bio": "© 2022. Proudly built by the Ray team. Course material by Mike Gelbart. Course platform by Max Pumperla (based on the SpaCy course by Ines Montani.",
+        "bio": "© 2022. Proudly built by the Ray team. Course material by Mike Gelbart. Course platform by Max Pumperla (based on the SpaCy course by Ines Montani).",
         "footerLinks": [
             { "text": "Website",
                 "url": "https://applied-rl-course.netlify.app/"

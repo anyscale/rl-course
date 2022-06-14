@@ -160,11 +160,16 @@ def create_slide_file(slide_file_name, slide_cells):
 
             for i, cell in enumerate(slide_cell_group):
                 source = cell["source"]
-                source = source.replace("## ", "# ").replace("## ", "# ")
 
                 # Make single header lines big and centered.
                 if len(source.split('\n')) == 1:
-                    source = source.replace("## ", "# ")
+                    if "####" not in source:
+                        source = source.replace("## ", "# ")
+                    if i == len(slide_cell_group) - 1:
+                        source = source.replace("#### ", "# ")
+
+                # Move L4 to L2 headers
+                source = source.replace("#### ", "## ")
 
                 source = parse_source_code(cell, source, module_name)
 
