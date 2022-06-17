@@ -115,6 +115,9 @@ class RandomLake(FrozenPond):
         
         return self.observation()
     
+    def seed(self, seed):
+        np.random.seed(seed)
+    
 class RandomLakeObs(RandomLake):
     def __init__(self, env_config=None, size=4):
         self.size = size
