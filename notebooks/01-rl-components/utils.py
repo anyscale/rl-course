@@ -1,5 +1,7 @@
 def my_render(self):
     
+    original = True # original frozen lake letter
+    
     if self.lastaction is not None:
         print(f"  ({['Left', 'Down', 'Right', 'Up'][self.lastaction]})")
     else:
@@ -17,9 +19,9 @@ def my_render(self):
             elif desc[i][j] == "G":
                 print("G", end="")
             elif desc[i][j] == "H":
-                print("O", end="")
+                print("H" if original else "O", end="")
             else:
-                print(".", end="")
+                print("F" if original else ".", end="")
         print()
 
 def fix_frozen_lake_render(env):
