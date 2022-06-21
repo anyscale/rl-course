@@ -12,3 +12,11 @@ def query_policy(trainer, env, obs, actions=None):
         actions = [0,1,2,3]
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
+
+lake_default_config = {
+    "framework"             : "torch",
+    "create_env_on_driver"  : True,
+    "seed"                  : 0,
+    "horizon"               : 100,
+    "model"                 : {"fcnet_hiddens" : [32, 32]}
+}

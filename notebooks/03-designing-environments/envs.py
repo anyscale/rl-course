@@ -9,7 +9,7 @@ class FrozenPond(gym.Env):
         
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
-        self.goal = (size-1, size-1)   # goal is at the bottom-right
+        self.goal = (self.size-1, self.size-1)   # goal is at the bottom-right
         
         if self.size == 4:
             self.holes = np.array([
