@@ -1,3 +1,6 @@
+import numpy as np
+import gym
+
 class SlateRecommender(gym.Env):
     def __init__(self, env_config=None):
         
