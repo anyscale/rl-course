@@ -9,18 +9,21 @@ class SlateRecommender(gym.Env):
         self.resample_documents = env_config.get("resample_documents", True)
         self.max_steps = env_config.get("max_steps", 100)
         self.sugar_momentum = env_config.get("sugar_momentum", 0.8) # (0,1)
-        
-        self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.num_candidates,))
-        
-        # if self.slate_size == 1:
-        self.action_space = gym.spaces.Discrete(self.num_candidates)
-        # else:
-            # self.action_space = gym.spaces.MultiDiscrete([self.num_candidates]*self.slate_size) 
+        self.history_len = env_config.get("history_len", 2) # number of past frames (not including present)
+        # Set obser and action space
+        self._set_spaces()
         
         # Create the documents
         if "seed" in env_config:
             self.seed(env_config["seed"])
-        self.resample_docs()
+        self.resample_docs() # moved to observation()
+        
+    def _set_spaces(self):
+        self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.num_candidates,))
+        # if self.slate_size == 1:
+        self.action_space = gym.spaces.Discrete(self.num_candidates)
+        # else:
+            # self.action_space = gym.spaces.MultiDiscrete([self.num_candidates]*self.slate_size) 
 
     def seed(self, seed):
         np.random.seed(seed)
@@ -29,9 +32,11 @@ class SlateRecommender(gym.Env):
         self.sugar_level = 0.0 # starts with no satiety 
         self.step_count = 0
         
+        self.history_stack = np.zeros((self.num_candidates, self.history_len+1))
+        
         return self.observation()
     
-    def observation(self):
+    def observation(self):            
         return self.documents # TODO - make this fancier?
     
     def reward(self, action):        
@@ -61,11 +66,31 @@ class SlateRecommender(gym.Env):
         # Compute reward
         reward = self.reward(action)
         
-        # Update sugar level
-        # for i in range(self.slate_size):
-        self.sugar_level = self.sugar_momentum * self.sugar_level + (1 - self.sugar_momentum) * self.documents[action]
-        
         if self.resample_documents:
             self.resample_docs()
         
+        # Update sugar level
+        # for i in range(self.slate_size):
+        self.sugar_level = self.sugar_momentum * self.sugar_level + \
+                           (1 - self.sugar_momentum) * self.documents[action]
+        
         return self.observation(), reward, self.done(), {"sugar_level" : self.sugar_level}
+
+
+class SlateRecommenderHistory(SlateRecommender):
+    def _set_spaces(self):
+        self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.num_candidates,self.history_len+1))
+        # if self.slate_size == 1:
+        self.action_space = gym.spaces.Discrete(self.num_candidates)
+        # else:
+            # self.action_space = gym.spaces.MultiDiscrete([self.num_candidates]*self.slate_size) 
+    
+    def observation(self):
+        # ASSUME!! that this method is only called by step() or reset()
+        # otherwise this will get updated weirdly
+
+        self.history_stack[:,1:] = self.history_stack[:,:-1]
+        self.history_stack[:,0] = self.documents
+        
+        return self.history_stack
+        
