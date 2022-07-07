@@ -1,7 +1,7 @@
 import numpy as np
 import gym
 
-class SlateRecommender(gym.Env):
+class BasicRecommender(gym.Env):
     def __init__(self, env_config=None):
         
         if env_config is None:
@@ -19,7 +19,6 @@ class SlateRecommender(gym.Env):
         # Create the documents
         if "seed" in env_config:
             self.seed(env_config["seed"])
-        self.resample_docs() # moved to observation()
         
     def _set_spaces(self):
         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.num_candidates,))
@@ -36,7 +35,9 @@ class SlateRecommender(gym.Env):
         self.step_count = 0
         
         self.history_stack = np.zeros(self.history_len)
-                
+        
+        self.resample_docs()
+        
         return self.observation()
     
     def observation(self):            
@@ -74,17 +75,17 @@ class SlateRecommender(gym.Env):
         self.history_stack[1:] = self.history_stack[:-1] # shift history
         self.history_stack[0] = self.documents[action] # new history
         
-        if self.resample_documents:
-            self.resample_docs()
-        
         # Update sugar level
         # for i in range(self.slate_size):
         self.sugar_level = self.sugar_momentum * self.sugar_level + \
                            (1 - self.sugar_momentum) * self.documents[action]
         
+        if self.resample_documents:
+            self.resample_docs()
+        
         return self.observation(), reward, self.done(), {"sugar_level" : self.sugar_level}
 
-class SlateRecommenderHistory(SlateRecommender):
+class BasicRecommenderWithHistory(BasicRecommender):
     def _set_spaces(self):
         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.num_candidates + self.history_len,))
         # if self.slate_size == 1:
