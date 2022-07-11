@@ -11,7 +11,7 @@ class BasicRecommender(gym.Env):
         self.slate_size = env_config.get("slate_size", 1)
         self.resample_documents = env_config.get("resample_documents", True)
         self.max_steps = env_config.get("max_steps", 100)
-        self.alpha = env_config.get("alpha", 0.5) # (0,1)
+        self.alpha = env_config.get("alpha", 0.9) # (0,1)
         self.history_len = env_config.get("history_len", 2) # number of past frames (not including present)
         # Set obser and action space
         self._set_spaces()
