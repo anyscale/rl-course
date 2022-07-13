@@ -95,4 +95,4 @@ class BasicRecommenderWithHistory(BasicRecommender):
 
     def observation(self):
         return np.concatenate((self.documents, self.history_stack))
-        
+
