@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
+import json
 
 def query_policy(trainer, env, obs, actions=None):
     policy = trainer.get_policy()
@@ -12,3 +13,11 @@ def query_policy(trainer, env, obs, actions=None):
         actions = [0,1,2,3]
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
+
+def load_offline_data(filename)
+    rollouts = []
+    with open(offline_recsys_file, "r") as f:
+        for line in f:
+            data = json.loads(line)
+            rollouts.append(data)
+    return rollouts
