@@ -12,7 +12,7 @@ dependencies:
   - python=3.8
   - pip:
     - gputil
-    - gym
+    - gym[mujoco]
     # - gym==0.22.0
     # - "gym[atari]==0.22.0" "gym[accept-rom-license]" atari_py
     - pygame
