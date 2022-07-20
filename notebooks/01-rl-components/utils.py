@@ -1,4 +1,4 @@
-def my_render(self):
+def my_render_frozen_lake(self):
     
     original = True # original frozen lake letter
     
@@ -25,5 +25,5 @@ def my_render(self):
         print()
 
 def fix_frozen_lake_render(env):
-    env.render = type(env.render)(my_render, env)
+    env.render = type(env.render)(my_render_frozen_lake, env)
     

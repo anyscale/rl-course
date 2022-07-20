@@ -1,4 +1,6 @@
-def my_render(self):
+import numpy as np
+
+def my_render_frozen_lake(self):
     
     original = True # original frozen lake letter
     
@@ -25,7 +27,28 @@ def my_render(self):
         print()
 
 def fix_frozen_lake_render(env):
-    env.render = type(env.render)(my_render, env)
+    env.render = type(env.render)(my_render_frozen_lake, env)
+    
+def my_render_cartpole(self):
+    POLE_LENGTH = 12
+    SCREEN_WIDTH = 50
+    x, x_dot, theta, theta_dot = self.state
+    
+    top_x_displacement = np.sin(theta) * POLE_LENGTH
+    top_x_displacement = np.round(top_x_displacement)
+    top_x_loc = SCREEN_WIDTH//2 + top_x_displacement
+    
+    top_y_loc = np.cos(theta) * POLE_LENGTH
+    top_y_loc = np.round(top_y_loc)
+    
+    # bottom always at (0,0)
+    screen = np.zeros((POLE_LENGTH, SCREEN_WIDTH), dtype=bool)
+    
+    
+
+def fix_cartpole_render(env):
+    env.render = type(env.render)(my_render_cartpole, env)
+
     
 def query_policy(trainer, env, obs, actions=None):
     policy = trainer.get_policy()
