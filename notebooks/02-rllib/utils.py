@@ -30,21 +30,30 @@ def fix_frozen_lake_render(env):
     env.render = type(env.render)(my_render_frozen_lake, env)
     
 def my_render_cartpole(self):
-    POLE_LENGTH = 12
-    SCREEN_WIDTH = 50
     x, x_dot, theta, theta_dot = self.state
+    print(x)
+    print(theta)
     
-    top_x_displacement = np.sin(theta) * POLE_LENGTH
-    top_x_displacement = np.round(top_x_displacement)
-    top_x_loc = SCREEN_WIDTH//2 + top_x_displacement
-    
-    top_y_loc = np.cos(theta) * POLE_LENGTH
-    top_y_loc = np.round(top_y_loc)
-    
-    # bottom always at (0,0)
-    screen = np.zeros((POLE_LENGTH, SCREEN_WIDTH), dtype=bool)
-    
-    
+    POLE_LENGTH = 12
+    SCREEN_WIDTH = 60
+
+    screen = np.full((POLE_LENGTH+1, SCREEN_WIDTH+1), " ")
+
+    yy = np.arange(POLE_LENGTH+1)
+    xx = np.arange(SCREEN_WIDTH+1) - SCREEN_WIDTH//2
+    angles = np.arctan2(xx-x, yy[:,None])
+    min_inds = np.argmin(np.abs(angles-theta), axis=1)
+
+    screen[np.arange(POLE_LENGTH+1, dtype=int), min_inds] = "."
+    screen[0] = " "
+    screen[0, int(np.round(x + SCREEN_WIDTH//2))] = "O"#"⬛️"
+
+    screen = screen[-1::-1,:]
+
+    for line in screen:
+        s = "".join(line)
+        flag = False
+        print(s)
 
 def fix_cartpole_render(env):
     env.render = type(env.render)(my_render_cartpole, env)
