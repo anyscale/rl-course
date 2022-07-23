@@ -1,4 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches
+from IPython import display
 
 def my_render_frozen_lake(self):
     
@@ -29,13 +32,12 @@ def my_render_frozen_lake(self):
 def fix_frozen_lake_render(env):
     env.render = type(env.render)(my_render_frozen_lake, env)
     
-def my_render_cartpole(self):
+def my_render_cartpole_text(self):
     x, x_dot, theta, theta_dot = self.state
-    print(x)
-    print(theta)
+    theta *= 2 # FOR RENDERING MORE DRAMATiCALLY
     
     POLE_LENGTH = 12
-    SCREEN_WIDTH = 60
+    SCREEN_WIDTH = 30
 
     screen = np.full((POLE_LENGTH+1, SCREEN_WIDTH+1), " ")
 
@@ -54,9 +56,35 @@ def my_render_cartpole(self):
         s = "".join(line)
         flag = False
         print(s)
+        
+def my_render_cartpole_matplotlib(self):
+    x, x_dot, theta, theta_dot = self.state
+    
+    pole_length = 5
+    base_height = 0.075 * pole_length
+    base_width = 0.75
+
+    if not hasattr(self, "render_ax"):
+        fig = plt.figure()
+        self.render_fig = fig
+    self.render_ax = plt.gca()
+    ax = self.render_ax
+    ax.clear()
+    ax.set_yticks([]);
+    ax.set_xlim([-5,5]);
+    ax.set_ylim([-base_height-0.02, pole_length + 0.2]);
+    ax.set_aspect('equal')
+    ax.plot([x,x+np.sin(theta)*pole_length], [0,np.cos(theta)*pole_length], linewidth=4, color="goldenrod");
+    rect = matplotlib.patches.Rectangle((x-base_width/2, -base_height), 
+                base_width, base_height, linewidth=1, edgecolor='black', facecolor='black')
+    ax.add_patch(rect);
+    ax.set_title(f"angle = {theta*180/np.pi:.2f} degrees");
+    # plt.show();
+    display.clear_output(wait=True);
+    display.display(self.render_fig);
 
 def fix_cartpole_render(env):
-    env.render = type(env.render)(my_render_cartpole, env)
+    env.render = type(env.render)(my_render_cartpole_matplotlib, env)
 
     
 def query_policy(trainer, env, obs, actions=None):
