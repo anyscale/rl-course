@@ -70,6 +70,7 @@ def my_render_cartpole_matplotlib(self):
     self.render_ax = plt.gca()
     ax = self.render_ax
     ax.clear()
+    ax.set_xticks([-4.8, -2.4, 0, 2.4, 4.8]);
     ax.set_yticks([]);
     ax.set_xlim([-5,5]);
     ax.set_ylim([-base_height-0.02, pole_length + 0.2]);
