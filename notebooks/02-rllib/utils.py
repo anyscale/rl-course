@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches
 from IPython import display
+import torch
+from ray.rllib.models.preprocessors import get_preprocessor 
+
 
 def my_render_frozen_lake(self):
     
@@ -60,7 +63,7 @@ def my_render_cartpole_text(self):
 def my_render_cartpole_matplotlib(self):
     x, x_dot, theta, theta_dot = self.state
     
-    pole_length = 5
+    pole_length = 3
     base_height = 0.075 * pole_length
     base_width = 0.75
 
