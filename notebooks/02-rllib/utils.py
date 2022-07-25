@@ -1,9 +1,31 @@
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches
 from IPython import display
 import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
+from ray.rllib.algorithms.ppo import PPO, PPOConfig
+
+# slippery_algo_config = {
+#     "framework"             : "torch",
+#     "create_env_on_driver"  : True,
+#     "seed"                  : 0,
+#     "env_config"            : {"is_slippery" : True},
+#     "evaluation_config"     : {"explore" : False}
+# }
+
+slippery_algo_config = (
+    PPOConfig()\
+    .framework("torch")\
+    .rollouts(create_env_on_local_worker=True)\
+    .debugging(seed=0, log_level="ERROR")\
+    .training(model={"fcnet_hiddens" : [64,64]})
+    .environment(env_config={"is_slippery" : True})\
+    .evaluation(evaluation_config = {"explore" : False})
+)
 
 
 def my_render_frozen_lake(self):

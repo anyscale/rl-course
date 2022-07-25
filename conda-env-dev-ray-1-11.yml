@@ -11,6 +11,7 @@ dependencies:
   - pip
   - python=3.8
   - pip:
+    - dm_tree
     - gputil
     - gym[mujoco]
     # - gym==0.22.0
