@@ -2,13 +2,14 @@ import time
 import gym
 from gym.spaces import Discrete, MultiDiscrete
 import numpy as np
-from ipywidgets import Output
+# from ipywidgets import Output
 from IPython import display
 
 import ray
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
 # This env created by Sven Mika
+# with minor modifications by Mike Gelbart
 class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
     
     def __init__(self, config=None):
@@ -22,17 +23,18 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
 
         self.observation_space = MultiDiscrete([self.width * self.height,
                                                 self.width * self.height])
-        # 0=up, 1=right, 2=down, 3=left.
+        # old way: 0=up, 1=right, 2=down, 3=left.
+        # frozen lake compatible: 0=left, 1=down, 2=right, 3=up
         self.action_space = Discrete(4)
 
         # Reset env.
         self.reset()
         
         # For rendering.
-        self.out = None
-        if config.get("render"):
-            self.out = Output()
-            display.display(self.out)
+        # self.out = None
+        # if config.get("render"):
+        #     self.out = Output()
+        #     display.display(self.out)
 
         self._spaces_in_preferred_format = False
 
@@ -129,6 +131,19 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
         Agent1: "new" when entering a new field. "bumped" when having been bumped into by agent2.
         Agent2: "bumped" when bumping into agent1 (agent1 then gets -1.0).
         """
+        
+        # old way: 0=up, 1=right, 2=down, 3=left.
+        # frozen lake compatible: 0=left, 1=down, 2=right, 3=up
+        ACTION_MAPPING = {
+            0 : 3,
+            1 : 2,
+            2 : 1,
+            3 : 0
+        }
+        action = ACTION_MAPPING[action]
+        # above: fix the convention to match frozen lake
+        # though Sven's code was originally different
+        
         orig_coords = coords[:]
         # Change the row: 0=up (-1), 2=down (+1)
         coords[0] += -1 if action == 0 else 1 if action == 2 else 0
@@ -163,8 +178,9 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
 
     def render(self, mode=None):
 
-        if self.out is not None:
-            self.out.clear_output(wait=True)
+        # if self.out is not None:
+        #     self.out.clear_output(wait=True)
+        display.clear_output(wait=True);
 
         print("_" * (self.width + 2))
         for r in range(self.height):
@@ -186,3 +202,4 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
         print("R2={: .1f} ({} collisions)".format(self.agent2_R, self.num_collisions))
         print()
         time.sleep(0.25)
+
