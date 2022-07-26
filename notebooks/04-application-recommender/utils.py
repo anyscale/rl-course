@@ -14,7 +14,7 @@ def query_policy(trainer, env, obs, actions=None):
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
 
-def load_offline_data(filename)
+def load_offline_data(filename):
     rollouts = []
     with open(offline_recsys_file, "r") as f:
         for line in f:
