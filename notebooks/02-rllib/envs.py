@@ -9,7 +9,7 @@ import ray
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
 # This env created by Sven Mika
-class MultiAgentArena(MultiAgentEnv):
+class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
     
     def __init__(self, config=None):
         config = config or {}
