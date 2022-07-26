@@ -15,11 +15,11 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
     def __init__(self, config=None):
         config = config or {}
         # Dimensions of the grid.
-        self.width = config.get("width", 10)
-        self.height = config.get("height", 10)
+        self.width = config.get("width", 6)
+        self.height = config.get("height", 6)
 
         # End an episode after this many timesteps.
-        self.timestep_limit = config.get("ts", 100)
+        self.timestep_limit = config.get("ts", 50)
 
         self.observation_space = MultiDiscrete([self.width * self.height,
                                                 self.width * self.height])
@@ -200,6 +200,5 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
         print(f"{'!!Collision!!' if self.collision else ''}")
         print("R1={: .1f}".format(self.agent1_R))
         print("R2={: .1f} ({} collisions)".format(self.agent2_R, self.num_collisions))
-        print()
-        time.sleep(0.25)
+        print("Env timesteps={}".format(self.timesteps))
 
