@@ -2,8 +2,11 @@ import gym
 import numpy as np
 
 class FrozenPond(gym.Env):
-    def __init__(self, env_config=None, size=4):
-        self.size = size
+    def __init__(self, env_config=None):
+        if env_config is None:
+            env_config = dict()
+            
+        self.size = env.config.get("size", 4)
         self.observation_space = gym.spaces.Discrete(size*size)
         self.action_space = gym.spaces.Discrete(size) 
         
@@ -119,8 +122,11 @@ class RandomLake(FrozenPond):
         np.random.seed(seed)
     
 class RandomLakeObs(RandomLake):
-    def __init__(self, env_config=None, size=4):
-        self.size = size
+    def __init__(self, env_config=None):
+        if env_config is None:
+            env_config = dict()
+            
+        self.size = env.config.get("size", 4)
         self.observation_space = gym.spaces.MultiDiscrete([2]*size)
         self.action_space = gym.spaces.Discrete(self.size)      
     
