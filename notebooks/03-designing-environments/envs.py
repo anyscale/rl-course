@@ -1,14 +1,17 @@
 import gym
 import numpy as np
 
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
 class FrozenPond(gym.Env):
     def __init__(self, env_config=None):
         if env_config is None:
             env_config = dict()
             
-        self.size = env.config.get("size", 4)
-        self.observation_space = gym.spaces.Discrete(size*size)
-        self.action_space = gym.spaces.Discrete(size) 
+        self.size = env_config.get("size", 4)
+        self.observation_space = gym.spaces.Discrete(self.size*self.size)
+        self.action_space = gym.spaces.Discrete(self.size) 
         
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
@@ -126,8 +129,8 @@ class RandomLakeObs(RandomLake):
         if env_config is None:
             env_config = dict()
             
-        self.size = env.config.get("size", 4)
-        self.observation_space = gym.spaces.MultiDiscrete([2]*size)
+        self.size = env_config.get("size", 4)
+        self.observation_space = gym.spaces.MultiDiscrete([2]*self.size)
         self.action_space = gym.spaces.Discrete(self.size)      
     
     def observation(self):
