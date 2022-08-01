@@ -64,13 +64,13 @@ class FrozenPond(gym.Env):
         for i in range(self.size):
             for j in range(self.size):
                 if (i,j) == self.player:
-                    print("P", end="")
+                    print("🧑", end="")
                 elif (i,j) == self.goal:
-                    print("G", end="")
+                    print("⛳️", end="")
                 elif self.holes[i,j]:
-                    print("O", end="")
+                    print("🕳", end="")
                 else:
-                    print(".", end="")
+                    print("🧊", end="")
             print()
             
 class Maze(FrozenPond):
@@ -83,13 +83,13 @@ class Maze(FrozenPond):
         for i in range(self.size):
             for j in range(self.size):
                 if (i,j) == self.goal:
-                    print("G", end="")
+                    print("⛳️", end="")
                 elif (i,j) == self.player:
-                    print("P", end="")
+                    print("🧑", end="")
                 elif self.holes[i,j]:
-                    print("X", end="")
+                    print("🟦", end="")
                 else:
-                    print(".", end="")
+                    print("🧊", end="")
                 # print("O", end="")
             print()
             

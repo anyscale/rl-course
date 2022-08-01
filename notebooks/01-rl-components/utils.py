@@ -1,6 +1,9 @@
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
 def my_render_frozen_lake(self):
     
-    original = True # original frozen lake letter
+    original = False # original frozen lake letter
     
     if self.lastaction is not None:
         print(f"  ({['Left', 'Down', 'Right', 'Up'][self.lastaction]})")
@@ -15,17 +18,17 @@ def my_render_frozen_lake(self):
     for i, line in enumerate(desc):
         for j, c in enumerate(line):
             if (i,j) == (row, col):
-                # print("P", end="")
-                print("🧑", end="")
+                print("P", end="")
+                # print("🧑", end="")
             elif desc[i][j] == "G":
-                # print("G", end="")
-                print("⛳️", end="")
+                print("G", end="")
+                # print("⛳️", end="")
             elif desc[i][j] == "H":
-                # print("H" if original else "O", end="")
-                print("🕳", end="")
+                print("H" if original else "O", end="")
+                # print("🕳", end="")
             else:
-                # print("F" if original else ".", end="")
-                print("🧊", end="")
+                print("F" if original else ".", end="")
+                # print("🧊", end="")
         print()
 
 def fix_frozen_lake_render(env):
