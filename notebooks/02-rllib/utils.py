@@ -9,6 +9,7 @@ import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
 from ray.rllib.algorithms.ppo import PPO, PPOConfig
 
+import pandas as pd
 
 # slippery_algo_config = {
 #     "framework"             : "torch",
@@ -128,3 +129,21 @@ def query_policy(trainer, env, obs, actions=None):
         actions = [0,1,2,3]
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
+
+
+
+def plot_action_probs(action_probs):
+    df = pd.DataFrame(action_probs, index=["left", "down", "right", "up"]).T
+    plt.rcParams["font.size"] = 14
+    plt.figure(figsize=(3,6))
+    plt.imshow(df.values);
+    plt.xticks(np.arange(4), labels=["left", "down", "up", "right"]);
+    plt.yticks(np.arange(16), labels=np.arange(16));
+    plt.setp(plt.gca().get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor");
+    plt.ylabel("observations");
+    plt.xlabel("actions");
+    cbar = plt.colorbar();
+    cbar.ax.set_ylabel('action probability', rotation=270)
+    cbar.set_ticks([0, 0.25, 0.75, 1])
+    plt.tight_layout();
