@@ -222,5 +222,5 @@ class MultiAgentArena(MultiAgentEnv):  # MultiAgentEnv is a gym.Env sub-class
         print(f"{'!!Collision!!' if self.collision else ''}")
         print("R1={: .1f}".format(self.agent1_R))
         print("R2={: .1f} ({} collisions)".format(self.agent2_R, self.num_collisions))
-        print("Env timesteps={}".format(self.timesteps))
+        print(f"Env timesteps={self.timesteps}/{self.timestep_limit}")
 
