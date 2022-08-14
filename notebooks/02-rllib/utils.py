@@ -137,7 +137,7 @@ def plot_action_probs(action_probs):
     plt.rcParams["font.size"] = 14
     plt.figure(figsize=(3,6))
     plt.imshow(df.values);
-    plt.xticks(np.arange(4), labels=["left", "down", "up", "right"]);
+    plt.xticks(np.arange(4), labels=["left", "down", "right", "up"]);
     plt.yticks(np.arange(16), labels=np.arange(16));
     plt.setp(plt.gca().get_xticklabels(), rotation=45, ha="right",
              rotation_mode="anchor");
