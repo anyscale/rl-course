@@ -11,6 +11,7 @@ from ray.rllib.env.multi_agent_env import MultiAgentEnv
 import utils
 
 from gym.envs.classic_control import CartPoleEnv
+from gym.wrappers import TimeLimit
 
 class MyCartPole(CartPoleEnv):
     def __init__(self, env_config=None):
@@ -18,10 +19,16 @@ class MyCartPole(CartPoleEnv):
             super().__init__(**env_config)
         else:
             super().__init__()
+            
+        return TimeLimit(self, max_episode_steps=500)
         
     def render(self):
         utils.my_render_cartpole_matplotlib(self)
 
+def make_cartpole(env_config=None):
+    env = MyCartPole(env_config)
+    return TimeLimit(env, max_episode_steps=500)
+        
 
 # This env created by Sven Mika
 # with minor modifications by Mike Gelbart
