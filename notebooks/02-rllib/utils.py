@@ -111,7 +111,7 @@ def my_render_cartpole_matplotlib(self):
     rect = matplotlib.patches.Rectangle((x-base_width/2, -base_height), 
                 base_width, base_height, linewidth=1, edgecolor='black', facecolor='black')
     ax.add_patch(rect);
-    ax.set_title(f"angle = {theta*180/np.pi:.2f} degrees");
+    ax.set_title(f"step = {self._elapsed_steps}, angle = {theta*180/np.pi:.2f} degrees");
     # plt.show();
     display.clear_output(wait=True);
     display.display(self.render_fig);

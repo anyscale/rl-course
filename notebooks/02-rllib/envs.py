@@ -13,14 +13,14 @@ import utils
 from gym.envs.classic_control import CartPoleEnv
 from gym.wrappers import TimeLimit
 
-class MyCartPole(CartPoleEnv):
+class MyCartPole(TimeLimit):
     def __init__(self, env_config=None):
         if isinstance(env_config, dict):
-            super().__init__(**env_config)
+            env = CartPoleEnv(**env_config)
         else:
-            super().__init__()
+            env = CartPoleEnv()
             
-        return TimeLimit(self, max_episode_steps=500)
+        super().__init__(env, max_episode_steps=500)
         
     def render(self):
         utils.my_render_cartpole_matplotlib(self)
