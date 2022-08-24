@@ -9,10 +9,11 @@ dependencies:
   - matplotlib
   - graphviz
   - pip
-  - python=3.8
+  - python=3.9
   - pip:
     - gputil
     - gym
+    - pygame
     - "ray[rllib]"
     - torch
     - torchvision
