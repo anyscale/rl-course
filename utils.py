@@ -3,6 +3,8 @@ import shutil
 import os
 import nbformat
 
+MC = "<!-- multiple choice -->"
+CE = "<!-- coding exercise -->"
 NB_VERSION = 4
 TOP_LEVEL = "## "
 SECTION = "####"
@@ -11,11 +13,7 @@ TEST_TEMPLATE = "from wasabi import msg\nfrom black import format_str, FileMode\
 
 base_path = os.path.abspath(".")
 static_path = os.path.join(base_path, "static")
-notebook_path = os.path.join(base_path, "notebooks")
-chapters_path = os.path.join(base_path, "chapters", "en")
-slides_path = os.path.join(chapters_path, "slides")
 base_exercise_path = os.path.join(base_path, "exercises")
-exercise_path = os.path.join(base_exercise_path, "en")
 
 
 def create(path):
@@ -24,28 +22,47 @@ def create(path):
         os.mkdir(path)
 
 
-def create_chapter_folders():
+def get_chapters_path(locale="en"):
+    return os.path.join(base_path, "chapters", locale)
+
+
+def get_slides_path(locale="en"):
+    chapters_path = get_chapters_path(locale)
+    return os.path.join(chapters_path, "slides")
+
+
+def get_exercise_path(locale="en"):
+    return os.path.join(base_exercise_path, locale)
+
+
+def get_notebook_base_path():
+    return os.path.join(base_path, "notebooks")
+
+
+def create_chapter_folders(locale="en"):
     """Create all chapter- and slide-specific folders."""
     chapters = os.path.join(base_path, "chapters")
     create(chapters)
-    create(chapters_path)
-    create(slides_path)
+
+    create(get_chapters_path(locale))
+    create(get_slides_path(locale))
 
 
-def create_exercise_folder():
+def create_exercise_folder(locale="en"):
     """Create all exercise folder."""
     create(base_exercise_path)
-    create(exercise_path)
+    create(get_exercise_path(locale))
 
 
-def create_slide_folder(module):
+def create_slide_folder(module, locale="en"):
     """Create folders for each module's slides."""
-    slides_module = os.path.join(slides_path, module)
+    slides_module = os.path.join(get_slides_path(locale), module)
     create(slides_module)
 
 
 def copy_img_sources(module, module_name):
-    """Copy all image source files to the 'static' folder, so that Gatsby can reference them."""
+    """Copy all image source files to the 'static' folder,
+    so that Gatsby can reference them."""
     create(os.path.join(static_path, module_name))
     module_img_folder = os.path.join(static_path, module_name, "img")
     create(module_img_folder)
@@ -54,8 +71,9 @@ def copy_img_sources(module, module_name):
         shutil.copytree(src, module_img_folder, dirs_exist_ok=True)
 
 
-def get_modules():
+def get_modules(notebook_path):
     """Get all notebook modules, i.e. those of the form 'notebooks/0x_foo_bar' """
+    create(notebook_path)
     modules = [f.path for f in os.scandir(notebook_path) if f.is_dir() if "/0" in f.path]
     modules.sort()
     return modules
@@ -139,7 +157,7 @@ def get_slide_main(slide_cells, module_name, slide_file_name, exercise_count):
     return slide_main
 
 
-def create_slide_file(slide_file_name, slide_cells):
+def create_slide_file(slide_file_name, slide_cells, slides_path):
     """Create the reveal.js slide decks embedded in modules."""
     module_name = slide_file_name.split("_")[0]
     slide_file = os.path.join(slides_path, module_name, slide_file_name + ".md")
@@ -249,7 +267,7 @@ def get_exercise_title(lines, exercise_count):
     return exercise_title
 
 
-def parse_exercise(ex_group, content, module_count, exercise_count):
+def parse_exercise(ex_group, content, module_count, exercise_count, exercise_path):
     """Parse any exercise type."""
 
     lines = ex_group[0]["source"].split("\n")
