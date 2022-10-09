@@ -1,0 +1,94 @@
+{
+  "en": {
+    "langName": "English",
+    "title": "Applied Reinforcement Learning with RLlib",
+    "slogan": "Learn applied reinforcement with Ray RLlib",
+    "description": "This course teaches you the basics of reinforcement learning in an applied fashion, by leveraging the production-grade RL framework Ray RLlib. Enjoy!",
+    "bio": "© 2022. Proudly built by the Ray team. Course material by Mike Gelbart. Course platform by Max Pumperla (based on the SpaCy course by Ines Montani).",
+    "footerLinks": [
+      { "text": "Website",
+        "url": "https://applied-rl-course.netlify.app/"
+      },
+      {
+        "text": "Source Code",
+        "url": "https://github.com/ray-project/ray"
+      },
+      {
+        "text": "Course Platform",
+        "url": "https://github.com/ines/course-starter-python"
+      }
+    ],
+    "socialImage": "social.png",
+    "uiText": {
+      "aboutMe": "About the team",
+      "aboutCourse": "About this course",
+      "markAsCompleted": "Mark as completed",
+      "removeFromCompleted": "Remove from completed",
+      "completed": "Completed",
+      "submit": "Submit",
+      "correct": "That's correct!",
+      "incorrect": "Incorrect.",
+      "showSolution": "Show solution",
+      "reset": "Reset",
+      "runCode": "Run code",
+      "next": "Next",
+      "showHints": "Show hints",
+      "hideHints": "Hide hints",
+      "loading": " ",
+      "connectingFailed": "Connecting failed. Please reload and try again.",
+      "launchingDocker": "Launching Docker container on",
+      "reconnectingDocker": "Reconnecting to Docker container on",
+      "prevChapter": "Previous Chapter",
+      "nextChapter": "Next Chapter",
+      "start": "Start",
+      "video": "Video",
+      "slides": "Slides"
+    }
+  },
+  "de": {
+    "langName": "Deutsch",
+    "title": "Angewandtes Reinforcement Learning mit RLlib",
+    "slogan": "Lernen Sie angewandtes Verstärkungslernen mit Ray RLlib",
+    "description": "Dieser Kurs lehrt Sie die Grundlagen des Reinforcement Learning in einer angewandten Art und Weise, indem er das produktionsreife RL-Framework Ray RLlib einsetzt. Enjoy!",
+    "bio": "© 2022. Stolz entwickelt vom Ray-Team. Kursmaterial von Mike Gelbart. Kursplattform von Max Pumperla (basierend auf dem SpaCy-Kurs von Ines Montani).",
+    "footerLinks": [
+      { "text": "Website",
+        "url": "https://applied-rl-course.netlify.app/"
+      },
+      {
+        "text": "Quellcode",
+        "url": "https://github.com/ray-project/ray"
+      },
+      {
+        "text": "Kursplattform",
+        "url": "https://github.com/ines/course-starter-python"
+      }
+    ],
+    "socialImage": "social.png",
+    "uiText": {
+      "aboutMe": "Über das Team",
+      "aboutCourse": "Über diesen Kurs",
+      "markAsCompleted": "Als abgeschlossen markieren",
+      "removeFromCompleted": "Von abgeschlossen entfernen",
+      "completed": "Abgeschlossen",
+      "submit": "Absenden",
+      "correct": "Das ist korrekt!",
+      "incorrect": "Nicht korrekt!",
+      "showSolution": "Lösung anzeigen",
+      "reset": "Zurücksetzen",
+      "runCode": "Code ausführen",
+      "next": "Weiter",
+      "showHints": "Hinweise anzeigen",
+      "hideHints": "Hinweise ausblenden",
+      "loading": " ",
+      "connectingFailed": "Verbindungsaufbau fehlgeschlagen. Bitte neu laden und erneut versuchen.",
+      "launchingDocker": "Launching Docker container on",
+      "reconnectingDocker": "Reconnecting to Docker container on",
+      "prevChapter": "Vorheriges Kapitel",
+      "nextChapter": "Nächstes Kapitel",
+      "start": "Start",
+      "video": "Video",
+      "slides": "Slides"
+    }
+  }
+}
