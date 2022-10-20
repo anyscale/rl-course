@@ -6,3 +6,4 @@ gym==0.22.0
 gym-toytext==0.25.0
 pygame==2.1.0
 nbformat==5.4.0
+wasabi==0.9.1
