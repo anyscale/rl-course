@@ -54,20 +54,19 @@ def translate_course_notebooks(locale):
 
         for nb_source in notebooks:
 
-            print(f"Translating {nb_source}")
+            print(f"Translating {nb_source} to {locale}")
             nb = get_notebook(nb_source)
 
             for cell in nb["cells"]:
                 if cell["cell_type"] == "markdown":
-                    cell["source"] = translate_cell(cell["source"], locale="DE")
+                    cell["source"] = translate_cell(cell["source"], locale=locale)
 
                     # formatting issues
                     cell["source"] = cell["source"].replace("[ x]", "[x]")
 
                     # German "undos"
                     cell["source"] = cell["source"].replace("Verstärkungslernen", "Reinforcement Learning")
-                    cell["source"] = cell["source"].replace("Umgebung", "Environment")
-                    cell["source"] = cell["source"].replace("Umwelt", "Environment")
+                    cell["source"] = cell["source"].replace("Umwelt", "Umgebung")
                     cell["source"] = cell["source"].replace("policy", "Policy")
                     cell["source"] = cell["source"].replace("Politik", "Policy")
                     cell["source"] = cell["source"].replace("politik", "policy")
@@ -81,6 +80,12 @@ def translate_course_notebooks(locale):
 
 
 if __name__ == "__main__":
-    translation_locales = ["de"]
+    # TODO just automate this
+    # Note: before running this, you need to set the DEEPL_API_KEY environment variable.
+    # AND you need to copy all source notebooks into the respective locale sub-folders,
+    # e.g. notebooks/00-introduction/00-introduction.ipynb
+    #      --> notebooks/de/00-introduction/00-introduction.ipynb etc.
+    translation_locales = []
+    # translation_locales = ["de", "fr", "es"]
     for locale in translation_locales:
         translate_course_notebooks(locale=locale)

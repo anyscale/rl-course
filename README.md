@@ -99,3 +99,7 @@ sh ./sync.sh
 ```
 
 This requires write-access to said repo, please get in touch with @maxpumperla if you need access.
+
+## Translating the course
+
+To translate a course to another natural language, you can use the `translate.py` script.

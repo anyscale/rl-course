@@ -130,6 +130,7 @@ sys.path.insert(0, '/content/rl-course-exercises')
 
 
 if __name__ == "__main__":
-    supported_locales = ["en", "de"]
+    # Run "translate.py" before this script, if you haven't already done so.
+    supported_locales = ["en", "de", "es", "fr"]
     for locale in supported_locales:
         generate_course_content(locale=locale)
