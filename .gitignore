@@ -80,3 +80,8 @@ static/module*
 __pycache__
 env
 venv
+
+notebooks/es
+notebooks/de
+notebooks/fr
+notebooks/se

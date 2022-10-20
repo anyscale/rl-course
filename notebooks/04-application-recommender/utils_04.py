@@ -11,15 +11,14 @@ def query_policy(trainer, env, obs, actions=None):
     model_output = model({"obs": torch.from_numpy(prep.transform(obs)[None])})[0]
     dist = policy.dist_class(model_output, model) 
     if actions is None:
-        actions = [0,1,2,3]
+        actions = [0, 1, 2, 3]
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
 
 
-def load_offline_data(filename):
+def load_offline_data(filename="data/recommender_offline.json"):
     rollouts = []
-    # TODO this variable does not exist
-    with open(offline_recsys_file, "r") as f:
+    with open(filename, "r") as f:
         for line in f:
             data = json.loads(line)
             rollouts.append(data)

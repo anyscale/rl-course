@@ -75,3 +75,27 @@ then set `NODE_VERSION` to `14` and `PYTHON_VERSION` to `3.8` as shown below,
 and then deploy.
 
 ![netlify](static/netlify.png)
+
+## Binder vs. Colab for interactive exercises
+
+For now we've decided against using Binder for interactive exercises, which means
+we have to externally host notebooks on Colab for execution. This is not ideal, but
+works. Should we want to switch back to Binder, this can be done by simply setting
+
+```python
+RUNNABLE_EXERCISES = True
+```
+
+in `parse_notebooks.py`. All else will remain the same.
+
+## Syncing the public exercise notebook, models and other data
+
+To run the code on Colab, we need a [public repo](https://github.com/maxpumperla/rl-course-exercises) to launch from.
+This repo only contains the coding exercises and there solution, as well as the trained models and data files used.
+To sync this repo with source data from this repo, simply run:
+
+```shell
+sh ./sync.sh
+```
+
+This requires write-access to said repo, please get in touch with @maxpumperla if you need access.

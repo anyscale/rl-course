@@ -3,6 +3,9 @@ import shutil
 import os
 import nbformat
 
+OPEN_IN_COLAB = """<a target="_blank" href="https://colab.research.google.com/github/maxpumperla/rl-course-exercises/blob/main/exercise.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>"""
 EXERCISE_NB = "https://colab.research.google.com/github/maxpumperla/" \
               "rl-course-exercises/blob/main/exercise.ipynb"
 MC = "<!-- multiple choice -->"
@@ -29,16 +32,16 @@ def create(path):
         os.mkdir(path)
 
 
-def get_chapters_path(locale="en"):
+def get_chapters_path(locale):
     return os.path.join(base_path, "chapters", locale)
 
 
-def get_slides_path(locale="en"):
+def get_slides_path(locale):
     chapters_path = get_chapters_path(locale)
     return os.path.join(chapters_path, "slides")
 
 
-def get_exercise_path(locale="en"):
+def get_exercise_path(locale):
     return os.path.join(base_exercise_path, locale)
 
 
@@ -46,7 +49,7 @@ def get_notebook_base_path():
     return os.path.join(base_path, "notebooks")
 
 
-def create_chapter_folders(locale="en"):
+def create_chapter_folders(locale):
     """Create all chapter- and slide-specific folders."""
     chapters = os.path.join(base_path, "chapters")
     create(chapters)
@@ -55,13 +58,13 @@ def create_chapter_folders(locale="en"):
     create(get_slides_path(locale))
 
 
-def create_exercise_folder(locale="en"):
+def create_exercise_folder(locale):
     """Create all exercise folder."""
     create(base_exercise_path)
     create(get_exercise_path(locale))
 
 
-def create_slide_folder(module, locale="en"):
+def create_slide_folder(module, locale):
     """Create folders for each module's slides."""
     slides_module = os.path.join(get_slides_path(locale), module)
     create(slides_module)
@@ -346,7 +349,7 @@ def parse_exercise(
             else:
                 content += f"""**Please go to <a href="{EXERCISE_NB}" 
 target="_blank">the exercise notebook for this course</a>
-next, solve {exercise_name}, and come back here!**\n\n"""
+next, solve {exercise_name}, and come back here! {OPEN_IN_COLAB}**\n\n"""
             has_exercise = True
             source = source.strip("# EXERCISE")
             with open(all_exercises_file, "a") as f:

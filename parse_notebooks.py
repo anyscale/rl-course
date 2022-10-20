@@ -70,7 +70,7 @@ sys.path.insert(0, '/content/rl-course-exercises')
 
         # Create all folders and copy static images
         module_name = f"module{module_count}"
-        create_slide_folder(module_name)
+        create_slide_folder(module_name, locale)
         copy_img_sources(module, module_name)
 
         # Sort all contained notebooks alphabetically
@@ -130,4 +130,6 @@ sys.path.insert(0, '/content/rl-course-exercises')
 
 
 if __name__ == "__main__":
-    generate_course_content(locale="en")
+    supported_locales = ["en", "de"]
+    for locale in supported_locales:
+        generate_course_content(locale=locale)

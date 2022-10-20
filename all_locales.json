@@ -4,7 +4,7 @@
     "title": "Applied Reinforcement Learning with RLlib",
     "slogan": "Learn applied reinforcement with Ray RLlib",
     "description": "This course teaches you the basics of reinforcement learning in an applied fashion, by leveraging the production-grade RL framework Ray RLlib. Enjoy!",
-    "bio": "© 2022. Proudly built by the Ray team. Course material by Mike Gelbart. Course platform by Max Pumperla (based on the SpaCy course by Ines Montani).",
+    "bio": "© 2022. Proudly built by the Ray team. Course platform based on the SpaCy course by Ines Montani.",
     "footerLinks": [
       { "text": "Website",
         "url": "https://applied-rl-course.netlify.app/"
@@ -45,12 +45,104 @@
       "slides": "Slides"
     }
   },
+  "fr" : {
+    "langName" : "Français",
+    "title" : "Apprentissage par renforcement appliqué avec RLlib",
+    "slogan" : "Apprenez le renforcement appliqué avec Ray RLlib",
+    "description" : "Ce cours vous enseigne les bases de l'apprentissage par renforcement de manière appliquée, en s'appuyant sur le framework RL de qualité production Ray RLlib. Amusez-vous bien !",
+    "bio" : "© 2022. Fièrement construit par l'équipe Ray. Plate-forme de cours basée sur le cours SpaCy d'Ines Montani.",
+    "footerLinks" : [
+      { "text" : "Site Web",
+        "url" : "https://applied-rl-course.netlify.app/"
+      },
+      {
+        "texte" : "Code source",
+        "url" : "https://github.com/ray-project/ray"
+      },
+      {
+        "texte" : "Plate-forme de cours",
+        "url" : "https://github.com/ines/course-starter-python"
+      }
+    ],
+    "socialImage" : "social.png",
+    "uiText" : {
+      "aboutMe" : "A propos de l'équipe",
+      "aboutCourse" : "A propos de ce cours",
+      "markAsCompleted" : "Marquer comme terminé",
+      "removeFromCompleted" : "Retirer de la liste des cours terminés",
+      "completed" : "Completed",
+      "submit" : "Submit",
+      "correct" : "C'est correct !",
+      "incorrect" : "Incorrect.",
+      "showSolution" : "Montrer la solution",
+      "reset" : "Reset",
+      "runCode" : "Code d'exécution",
+      "next" : "Next",
+      "showHints" : "Show hints",
+      "hideHints" : "Hide hints",
+      "loading" : " ",
+      "connectingFailed" : "La connexion a échoué. Veuillez recharger et réessayer.",
+      "launchingDocker" : "Lancement du conteneur Docker sur",
+      "reconnectingDocker" : "Reconnexion au conteneur Docker le",
+      "prevChapter" : "Chapitre précédent",
+      "nextChapter" : "Chapitre suivant",
+      "start" : "Start",
+      "Video" : "Video",
+      "slides" : "Slides"
+    }
+  },
+  "es": {
+    "langName": "Español",
+    "title": "Aprendizaje por refuerzo aplicado con RLlib",
+    "slogan": "Aprende refuerzo aplicado con Ray RLlib",
+    "descripción": "Este curso te enseña los fundamentos del aprendizaje por refuerzo de forma aplicada, aprovechando el framework RL de grado de producción Ray RLlib. Que lo disfrutes!",
+    "bio": "© 2022. Construido con orgullo por el equipo de Ray. Plataforma del curso basada en el curso SpaCy de Ines Montani",
+    "footerLinks": [
+      { "text": "Sitio web",
+        "url": "https://applied-rl-course.netlify.app/"
+      },
+      {
+        "texto": "Código fuente",
+        "url": "https://github.com/ray-project/ray"
+      },
+      {
+        "text": "Plataforma del curso",
+        "url": "https://github.com/ines/course-starter-python"
+      }
+    ],
+    "socialImage": "social.png",
+    "uiText": {
+      "aboutMe": "Sobre el equipo",
+      "aboutCourse": "Sobre este curso",
+      "markAsCompleted": "Marcar como completado",
+      "removeFromCompleted": "Quitar de completado",
+      "completed": "Completado",
+      "submit": "Enviar",
+      "correcto": "¡Correcto!",
+      "incorrecto": "Incorrecto",
+      "showSolution": "Mostrar solución",
+      "reset": "Reset",
+      "runCode": "Ejecutar código",
+      "siguiente": "Next",
+      "showHints": "Show hints": "Mostrar pistas",
+      "hideHints": "Ocultar sugerencias",
+      "loading": " ",
+      "connectingFailed": "La conexión ha fallado. Por favor, vuelva a cargar e inténtelo de nuevo",
+      "launchingDocker": "Lanzando contenedor Docker en",
+      "reconnectingDocker": "Reconectando al contenedor Docker en",
+      "prevChapter": "PreviousChapter": "Capítulo anterior",
+      "nextChapter": "Capítulo siguiente": "Next Chapter",
+      "start": "Inicio",
+      "video": "Video",
+      "diapositivas": "Diapositivas"
+    }
+  },
   "de": {
     "langName": "Deutsch",
     "title": "Angewandtes Reinforcement Learning mit RLlib",
     "slogan": "Lernen Sie angewandtes Verstärkungslernen mit Ray RLlib",
     "description": "Dieser Kurs lehrt Sie die Grundlagen des Reinforcement Learning in einer angewandten Art und Weise, indem er das produktionsreife RL-Framework Ray RLlib einsetzt. Enjoy!",
-    "bio": "© 2022. Stolz entwickelt vom Ray-Team. Kursmaterial von Mike Gelbart. Kursplattform von Max Pumperla (basierend auf dem SpaCy-Kurs von Ines Montani).",
+    "bio": "© 2022. Entwickelt vom Ray-Team. Kursmaterial basierend auf dem SpaCy-Kurs von Ines Montani.",
     "footerLinks": [
       { "text": "Website",
         "url": "https://applied-rl-course.netlify.app/"
