@@ -3,6 +3,7 @@ import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
 import json
 
+
 def query_policy(trainer, env, obs, actions=None):
     policy = trainer.get_policy()
     model = policy.model    
@@ -14,8 +15,10 @@ def query_policy(trainer, env, obs, actions=None):
     probs = np.exp(dist.logp(torch.from_numpy(np.array(actions))).detach().numpy())
     return probs
 
+
 def load_offline_data(filename):
     rollouts = []
+    # TODO this variable does not exist
     with open(offline_recsys_file, "r") as f:
         for line in f:
             data = json.loads(line)

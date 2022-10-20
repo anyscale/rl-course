@@ -1,6 +1,7 @@
 import numpy as np
 import gym
 
+
 class BasicRecommender(gym.Env):
     def __init__(self, env_config=None):
         
@@ -12,7 +13,7 @@ class BasicRecommender(gym.Env):
         self.resample_documents = env_config.get("resample_documents", True)
         self.max_steps = env_config.get("max_steps", 100)
         self.alpha = env_config.get("alpha", 0.9) # (0,1)
-        self.history_len = env_config.get("history_len", 2) # number of past frames (not including present)
+        self.history_len = env_config.get("history_len", 2)  # number of past frames (not including present)
         # Set obser and action space
         self._set_spaces()
         
@@ -84,6 +85,7 @@ class BasicRecommender(gym.Env):
             self.resample_docs()
         
         return self.observation(), reward, self.done(), {"sugar_level" : self.sugar_level}
+
 
 class BasicRecommenderWithHistory(BasicRecommender):
     def _set_spaces(self):
