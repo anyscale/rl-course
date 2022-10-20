@@ -1,1 +1,7 @@
--r binder/requirements.txt
+ray[rllib]==2.0.0
+torch==1.12.1
+torchvision==0.13.1
+matplotlib==3.5.2
+gym==0.22.0
+gym-toytext==0.25.0
+pygame==2.1.0

@@ -6,8 +6,11 @@ from utils import get_slide_main, parse_exercise, parse_front_matter
 from utils import get_notebook_base_path, get_slides_path, get_exercise_path
 from utils import get_chapters_path, MC, CE
 
-# TODO: make sure all exercise content is transformed from md to html, e.g.
-#  code, italics, bold etc. | is there a library for that?
+# If set to True, exercise content is directly embedded into the course content, so that
+# if can e.g. connect and remotely execute code on a binder server.
+# If set to False, we generate separate exercise notebooks that we launch in Google
+# Colab and then reference these notebook exercises in the course content.
+RUNNABLE_EXERCISES = False
 
 
 def generate_course_content(locale="en"):
@@ -19,10 +22,25 @@ def generate_course_content(locale="en"):
     create_exercise_folder(locale)
 
     notebook_path = get_notebook_base_path()
-    notebook_path = notebook_path if locale == "en" else os.path.join(notebook_path, locale)
+    notebook_path = notebook_path if locale == "en" else \
+        os.path.join(notebook_path, locale)
     modules = get_modules(notebook_path)
     num_modules = len(modules)
     module_count = 0
+
+    all_exercises_file = os.path.join(exercise_path, "exercise.py")
+    with open(all_exercises_file, "w") as ex_file:
+        ex_file.write("""# %% [markdown]\n\n
+# Exercises and solutions for 
+[Applied RL with RLlib](https://applied-rl-course.netlify.app/).\n\n
+The exercises found here are immediately followed by their solutions. We encourage you 
+to attempt a solution before viewing the proposed solutions. To execute the code,
+please install all necessary dependencies first (keep this notebook open if you want
+to run multiple exercises without having to reinstall dependencies).\n\n
+# %%
+! pip install ray[rllib]>=2.0.0 torch matplotlib 
+! pip install gym==0.22.0 gym-toytext==0.25.0 pygame==2.1.0
+""")
 
     # For each module/chapter
     for module in modules:
@@ -58,7 +76,9 @@ def generate_course_content(locale="en"):
 
             # Construct the import statement for slides in the main markdown file
             slide_file_name = f"{module_name}_{notebook_count}"
-            slide_main = get_slide_main(slide_cells, module_name, slide_file_name, exercise_count)
+            slide_main = get_slide_main(
+                slide_cells, module_name, slide_file_name, exercise_count
+            )
             content += slide_main
             exercise_count += 1
 
@@ -70,16 +90,25 @@ def generate_course_content(locale="en"):
                 first_source = ex_group[0]["source"]
                 if MC in first_source or CE in first_source:
                     content = parse_exercise(
-                        ex_group, content, module_count, exercise_count, exercise_path)
+                        ex_group,
+                        content,
+                        module_count,
+                        exercise_count,
+                        exercise_path,
+                        RUNNABLE_EXERCISES,
+                        all_exercises_file
+                    )
                     exercise_count += 1
 
             notebook_count += 1
-
         # Then write all the module content and move on to the next.
         with open(os.path.join(chapters_path, f"{module_name}.md"), "w") as meta:
             meta.write(content)
         module_count += 1
 
+    import subprocess
+    subprocess.run(["jupytext", all_exercises_file, "--to", "ipynb"])
+
 
 if __name__ == "__main__":
-    get_chapters_path(locale="en")
+    generate_course_content(locale="en")

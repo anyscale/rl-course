@@ -55,8 +55,9 @@ if you change any of your notebooks, you have to rebuild sources with `python pa
 
 ## Deployment on Netlify
 
-We've created a second [GitHub remote]() for this project to deploy the site on Netlify
-(and pass by the policy of having to beg someone several times to allow the Netlify integration).
+We've created a second [GitHub remote](https://github.com/maxpumperla/anyscale-rl-course) 
+for this project to deploy the site on Netlify
+(and bypass the policy of having to beg someone several times to allow the Netlify integration).
 After cloning this repo, please type:
 
 ```shell

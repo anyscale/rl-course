@@ -3,13 +3,20 @@ import shutil
 import os
 import nbformat
 
+EXERCISE_NB = "https://colab.research.google.com/github/maxpumperla/" \
+              "rl-course-exercises/blob/main/exercise.ipynb"
 MC = "<!-- multiple choice -->"
 CE = "<!-- coding exercise -->"
 NB_VERSION = 4
 TOP_LEVEL = "## "
 SECTION = "####"
 SLIDE_HEADER = """---\ntype: slides\n---\n\n"""
-TEST_TEMPLATE = "from wasabi import msg\nfrom black import format_str, FileMode\n\nfile_mode = FileMode()\n\ndef blacken(code):\n    try:\n        return format_str(code, mode=file_mode)\n    except:\n        return code\n\n__msg__ = msg\n__solution__ = blacken(\"\"\"${solution}\"\"\")\n\n${solution}\n\n${test}\n\ntry:\n    test()\nexcept AssertionError as e:\n    __msg__.fail(e)"
+TEST_TEMPLATE = "from wasabi import msg\nfrom black import format_str, " \
+                "FileMode\n\nfile_mode = FileMode()\n\ndef blacken(code):\n    " \
+                "try:\n        return format_str(code, mode=file_mode)\n    except:\n" \
+                "        return code\n\n__msg__ = msg\n__solution__ = " \
+                "blacken(\"\"\"${solution}\"\"\")\n\n${solution}\n\n${test}\n\ntry:\n" \
+                "    test()\nexcept AssertionError as e:\n    __msg__.fail(e)"
 
 base_path = os.path.abspath(".")
 static_path = os.path.join(base_path, "static")
@@ -74,7 +81,9 @@ def copy_img_sources(module, module_name):
 def get_modules(notebook_path):
     """Get all notebook modules, i.e. those of the form 'notebooks/0x_foo_bar' """
     create(notebook_path)
-    modules = [f.path for f in os.scandir(notebook_path) if f.is_dir() if "/0" in f.path]
+    modules = [
+        f.path for f in os.scandir(notebook_path) if f.is_dir() if "/0" in f.path
+    ]
     modules.sort()
     return modules
 
@@ -267,7 +276,15 @@ def get_exercise_title(lines, exercise_count):
     return exercise_title
 
 
-def parse_exercise(ex_group, content, module_count, exercise_count, exercise_path):
+def parse_exercise(
+        ex_group,
+        content,
+        module_count,
+        exercise_count,
+        exercise_path,
+        runnable,
+        all_exercises_file
+):
     """Parse any exercise type."""
 
     lines = ex_group[0]["source"].split("\n")
@@ -280,9 +297,15 @@ def parse_exercise(ex_group, content, module_count, exercise_count, exercise_pat
     has_solution = False
     has_test = False
 
-    exercise_file = os.path.join(exercise_path, f"exc_{module_count}_{exercise_count}.py")
-    solution_file = os.path.join(exercise_path, f"solution_{module_count}_{exercise_count}.py")
-    test_file = os.path.join(exercise_path, f"test_{module_count}_{exercise_count}.py")
+    exercise_file = os.path.join(
+        exercise_path, f"exc_{module_count}_{exercise_count}.py"
+    )
+    solution_file = os.path.join(
+        exercise_path, f"solution_{module_count}_{exercise_count}.py"
+    )
+    test_file = os.path.join(
+        exercise_path, f"test_{module_count}_{exercise_count}.py"
+    )
 
     for ex in ex_group:
         source = ex["source"]
@@ -315,24 +338,44 @@ def parse_exercise(ex_group, content, module_count, exercise_count, exercise_pat
 
             content += "</choice>\n\n"
         elif "EXERCISE" in source:
-            content += f"""<codeblock id="{module_count}_{exercise_count}">\n\n"""
+            exercise_name = f"exercise number {exercise_count} " \
+                            f"from module {module_count}"
+            if runnable:
+                content += f"""<codeblock id="{module_count}_{exercise_count}">\n\n"""
+                content += "</codeblock>\n\n"
+            else:
+                content += f"""**Please go to <a href="{EXERCISE_NB}" 
+target="_blank">the exercise notebook for this course</a>
+next, solve {exercise_name}, and come back here!**\n\n"""
             has_exercise = True
             source = source.strip("# EXERCISE")
+            with open(all_exercises_file, "a") as f:
+                f.write(f"# %%\n\n# {exercise_name}")
+                f.write(f"{source}\n\n")
             with open(exercise_file, "w") as exc:
+                exc.write(f"# {exercise_name}\n")
                 exc.write(source)
         elif "SOLUTION" in source:
+            solution_name = f"solution for exercise number {exercise_count} " \
+                            f"from module {module_count}"
             source = source.strip("# SOLUTION")
             has_solution = True
+            with open(all_exercises_file, "a") as f:
+                f.write(f"# %%\n\n# {solution_name}")
+                f.write(f"{source}\n\n")
             with open(solution_file, "w") as solution:
+                solution.write(f"# {solution_name}\n")
                 solution.write(source)
-            content += "</codeblock>\n\n"
         elif "TEST" in source:
             source = source.strip("# TEST")
             has_test = True
             with open(test_file, "w") as test:
                 test.write(source)
         else:
-            content += f"{source}\n\n"
+            if ex["cell_type"] == "code":
+                content += f"""```python\n{source}\n```\n\n"""
+            else:
+                content += f"{source}\n\n"
 
     content += "\n</exercise>\n\n"
 
