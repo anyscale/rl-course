@@ -40,6 +40,25 @@ to run multiple exercises without having to reinstall dependencies).\n\n
 # %%
 ! pip install ray[rllib]>=2.0.0 torch matplotlib 
 ! pip install gym==0.22.0 gym-toytext==0.25.0 pygame==2.1.0
+# %%
+!git clone https://github.com/maxpumperla/rl-course-exercises
+# %%
+%load rl-course-exercises/utils_01.py
+%load rl-course-exercises/utils_02.py
+%load rl-course-exercises/utils_03.py
+%load rl-course-exercises/utils_04.py
+%load rl-course-exercises/utils_05.py
+
+%load rl-course-exercises/envs_02.py
+%load rl-course-exercises/envs_03.py
+%load rl-course-exercises/envs_04.py
+%load rl-course-exercises/envs_05.py
+
+%cp -r rl-course-exercises/data .
+%cp -r rl-course-exercises/models .
+# %%
+import sys 
+sys.path.insert(0, '/content/rl-course-exercises')
 """)
 
     # For each module/chapter
