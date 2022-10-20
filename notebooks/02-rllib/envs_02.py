@@ -8,7 +8,7 @@ from IPython import display
 import ray
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
-import utils
+import utils_02 as utils
 
 from gym.envs.classic_control import CartPoleEnv
 from gym.wrappers import TimeLimit

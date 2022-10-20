@@ -1,9 +1,10 @@
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
+
 def my_render_frozen_lake(self):
     
-    original = False # original frozen lake letter
+    original = False  # original frozen lake letter
     
     if self.lastaction is not None:
         print(f"  ({['Left', 'Down', 'Right', 'Up'][self.lastaction]})")
@@ -17,7 +18,7 @@ def my_render_frozen_lake(self):
 
     for i, line in enumerate(desc):
         for j, c in enumerate(line):
-            if (i,j) == (row, col):
+            if (i, j) == (row, col):
                 print("P", end="")
                 # print("🧑", end="")
             elif desc[i][j] == "G":
