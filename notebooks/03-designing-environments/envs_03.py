@@ -4,6 +4,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
+
 class FrozenPond(gym.Env):
     def __init__(self, env_config=None):
         if env_config is None:
@@ -19,10 +20,10 @@ class FrozenPond(gym.Env):
         
         if self.size == 4:
             self.holes = np.array([
-                [0,0,0,0], # FFFF 
-                [0,1,0,1], # FHFH
-                [0,0,0,1], # FFFH
-                [1,0,0,0]  # HFFF
+                [0, 0, 0, 0],  # FFFF
+                [0, 1, 0, 1],  # FHFH
+                [0, 0, 0, 1],  # FFFH
+                [1, 0, 0, 0]  # HFFF
             ])
         else:
             raise Exception("Frozen Pond only supports size 4")
@@ -75,7 +76,8 @@ class FrozenPond(gym.Env):
                 else:
                     print("🧊", end="")
             print()
-            
+
+
 class Maze(FrozenPond):
     def done(self):
         return self.player == self.goal
@@ -95,7 +97,8 @@ class Maze(FrozenPond):
                     print("🧊", end="")
                 # print("O", end="")
             print()
-            
+
+
 class RandomMaze(Maze):
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
@@ -110,6 +113,7 @@ class RandomMaze(Maze):
     def done(self):
         return self.player == self.goal
 
+
 class RandomLake(FrozenPond):
     def reset(self):
         self.player = (0, 0) # the player starts at the top-left
@@ -123,7 +127,8 @@ class RandomLake(FrozenPond):
     
     def seed(self, seed):
         np.random.seed(seed)
-    
+
+
 class RandomLakeObs(RandomLake):
     def __init__(self, env_config=None):
         if env_config is None:
@@ -144,16 +149,19 @@ class RandomLakeObs(RandomLake):
         
         obs = np.array(obs, dtype=int) # this line is optional, helps readability of output
         return obs
-    
+
+
 class RandomLakeObsRew(RandomLakeObs): # fails to reach goal, bad reward
     def reward(self):
         return (self.size*2-2)-(abs(self.player[0]-self.goal[0]) + abs(self.player[1]-self.goal[1]))
-    
+
+
 # class RandomLakeObsTest(RandomLakeObs):
 #     def reward(self):
 #         goal_rew = int(self.player == self.goal)
 #         hole_rew = 0.1*(1-self.holes[self.player])
 #         return goal_rew + hole_rew
+
 
 class RandomLakeObsRew2(RandomLakeObs): # this one should work
     
