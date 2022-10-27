@@ -136,7 +136,7 @@ def query_policy(trainer, env, obs, actions=None):
 def plot_action_probs(action_probs):
     df = pd.DataFrame(action_probs, index=["left", "down", "right", "up"]).T
     plt.rcParams["font.size"] = 14
-    plt.figure(figsize=(3,6))
+    plt.figure(figsize=(3,5))
     plt.imshow(df.values);
     plt.xticks(np.arange(4), labels=["left", "down", "right", "up"]);
     plt.yticks(np.arange(16), labels=np.arange(16));
