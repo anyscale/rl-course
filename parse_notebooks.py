@@ -39,7 +39,7 @@ please install all necessary dependencies first (keep this notebook open if you 
 to run multiple exercises without having to reinstall dependencies).\n\n
 # %%
 ! pip install ray[rllib]>=2.0.0 torch matplotlib 
-! pip install gym==0.22.0 gym-toytext==0.25.0 pygame==2.1.0
+! pip install gym==0.23.1 gym-toytext==0.25.0 pygame==2.1.0
 # %%
 !git clone https://github.com/maxpumperla/rl-course-exercises
 # %%
