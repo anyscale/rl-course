@@ -383,7 +383,8 @@ next, solve {exercise_name}, and come back here! {OPEN_IN_COLAB}**\n\n"""
     content += "\n</exercise>\n\n"
 
     if has_exercise and not has_solution:
-        raise Exception("Coding exercise needs at least exercise and solution")
+        print("Warning: Coding exercise does not have a solution")
+        # raise Exception("Coding exercise needs at least exercise and solution")
 
     # If we found a coding exercise (not MC-only block), but no test, use the default.
     if has_exercise and not has_test:
