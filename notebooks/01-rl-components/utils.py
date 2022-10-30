@@ -9,28 +9,58 @@ from IPython import display
 import torch
 from ray.rllib.models.preprocessors import get_preprocessor 
 from ray.rllib.algorithms.ppo import PPO, PPOConfig
-
 import pandas as pd
 
-# slippery_algo_config = {
-#     "framework"             : "torch",
-#     "create_env_on_driver"  : True,
-#     "seed"                  : 0,
-#     "env_config"            : {"is_slippery" : True},
-#     "evaluation_config"     : {"explore" : False}
-# }
+import json
 
-slippery_algo_config = (
-    PPOConfig()\
-    .framework("torch")\
-    .rollouts(create_env_on_local_worker=True)\
-    .debugging(seed=0, log_level="ERROR")\
-    .training(model={"fcnet_hiddens" : [64,64]})
-    .environment(env_config={"is_slippery" : True})\
-    .evaluation(evaluation_config = {"explore" : False})
+plt.rcParams["font.size"] = 16
+
+
+lake_default_config = (
+    PPOConfig()
+    .framework("torch")
+    .rollouts(create_env_on_local_worker=True, horizon=100)
+    .debugging(seed=0, log_level="ERROR")
+    .training(model={"fcnet_hiddens": [32, 32]})
 )
 
 
+
+def my_render_frozen_lake(self):
+    
+    original = False  # original frozen lake letter
+    
+    if self.lastaction is not None:
+        print(f"  ({['Left', 'Down', 'Right', 'Up'][self.lastaction]})")
+    else:
+        print("")
+    
+    desc = self.desc.tolist()
+
+    row, col = self.s // self.ncol, self.s % self.ncol
+    desc = [[c.decode("utf-8") for c in line] for line in desc]
+
+    for i, line in enumerate(desc):
+        for j, c in enumerate(line):
+            if (i, j) == (row, col):
+                print("P", end="")
+                # print("🧑", end="")
+            elif desc[i][j] == "G":
+                print("G", end="")
+                # print("⛳️", end="")
+            elif desc[i][j] == "H":
+                print("H" if original else "O", end="")
+                # print("🕳", end="")
+            else:
+                print("F" if original else ".", end="")
+                # print("🧊", end="")
+        print()
+
+def fix_frozen_lake_render(env):
+    env.render = type(env.render)(my_render_frozen_lake, env)
+    
+    
+    
 def my_render_frozen_lake(self):
     
     original = False # original frozen lake letter
@@ -132,7 +162,6 @@ def query_policy(trainer, env, obs, actions=None):
     return probs
 
 
-
 def plot_action_probs(action_probs):
     df = pd.DataFrame(action_probs, index=["left", "down", "right", "up"]).T
     plt.rcParams["font.size"] = 14
@@ -151,6 +180,42 @@ def plot_action_probs(action_probs):
     
     
     
+    
+def load_offline_data(filename="data/recommender_offline.json"):
+    rollouts = []
+    with open(filename, "r") as f:
+        for line in f:
+            data = json.loads(line)
+            rollouts.append(data)
+    return rollouts
+
+
+
+def get_q_state(algo, env, obs):
+    model = algo.get_policy().model
+    prep = get_preprocessor(env.observation_space)(env.observation_space)
+    model_out = model({"obs": torch.from_numpy(prep.transform(obs)[None])})[0]
+    return float(model.get_state_value(model_out))
+
+
+def q_state_plot_frozenlake(q_s, env):
+    plt.imshow(np.reshape(q_s, (4,4)));
+    plt.colorbar();
+    plt.xticks(());
+    plt.yticks(());
+    desc = [[c.decode("utf-8") for c in line] for line in env.desc.tolist()]
+    mapper = {"F" : ".", "H" : "O", "S" : "S", "G" : "G"}
+    for i in range(4):
+        for j in range(4):
+            plt.text(j-0.1,i+0.1, mapper[desc[i][j]], fontsize=25, color="white")
+            
+            
+def get_q_state_action(algo, env, obs):
+    model = algo.get_policy().model
+    prep = get_preprocessor(env.observation_space)(env.observation_space)
+    model_out = model({"obs": torch.from_numpy(prep.transform(obs)[None])})[0]
+    return model.get_q_value_distributions(model_out)[0].detach().numpy()[0]
+
 
 # https://stackoverflow.com/questions/44666679/something-like-plt-matshow-but-with-triangles
 def quatromatrix(left, bottom, right, top, ax=None, triplotkw={},tripcolorkw={}):
@@ -176,7 +241,8 @@ def quatromatrix(left, bottom, right, top, ax=None, triplotkw={},tripcolorkw={})
     tripcolor = ax.tripcolor(A[:,0], A[:,1], Tr, facecolors=C, **tripcolorkw)
     # return tripcolor
     return ax
-    
+
+
 def q_state_action_plot_frozenlake(q_sa, env):
     ax = quatromatrix(*q_sa.reshape((4,4,4)).transpose((2,0,1))[[0,3,2,1]])
     # above line:
@@ -196,3 +262,4 @@ def q_state_action_plot_frozenlake(q_sa, env):
 
     norm = mpl.colors.Normalize(vmin=q_sa.min(), vmax=q_sa.max())
     plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap='viridis'), ax=ax);
+    
