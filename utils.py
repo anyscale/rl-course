@@ -141,7 +141,7 @@ def slides_and_ex(cells):
 
 
 def split_into_sections(cells):
-    """By convention we split notebooks by sections to group slides and exercises."""
+    """By convention, we split notebooks by sections to group slides and exercises."""
     top_cells = [c for c in cells if c['source'].startswith(SECTION)]
     indices = [cells.index(cell) for cell in top_cells] + [10000]  # dummy index
     section_cells = [cells[:indices[0]]]
@@ -192,7 +192,7 @@ def create_slide_file(slide_file_name, slide_cells, slides_path):
                 source = cell["source"]
 
                 # Make single header lines big and centered.
-                if len(source.split('\n')) == 1:
+                if len(source.split('\n')) == 1 or "<!-- video" in source:
                     if "####" not in source:
                         source = source.replace("## ", "# ")
                     if i == len(slide_cell_group) - 1:
