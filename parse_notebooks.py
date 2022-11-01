@@ -43,14 +43,11 @@ to run multiple exercises without having to reinstall dependencies).\n\n
 # %%
 !git clone https://github.com/maxpumperla/rl-course-exercises
 # %%
-%load rl-course-exercises/utils.py
-%load rl-course-exercises/envs.py
+%cp -r rl-course-exercises/utils.py .
+%cp -r rl-course-exercises/envs.py .
 
 %cp -r rl-course-exercises/data .
 %cp -r rl-course-exercises/models .
-# %%
-import sys 
-sys.path.insert(0, '/content/rl-course-exercises')
 """)
 
     # For each module/chapter
