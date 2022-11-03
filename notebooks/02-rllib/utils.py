@@ -25,6 +25,17 @@ lake_default_config = (
 )
 
 
+slippery_algo_config = (
+    PPOConfig()
+    .framework("torch")
+    .rollouts(create_env_on_local_worker=True)
+    .debugging(seed=0, log_level="ERROR")
+    .training(model={"fcnet_hiddens": [64, 64]})
+    .environment(env_config={"is_slippery": True})
+    .evaluation(evaluation_config={"explore": False})
+)
+
+
 
 def my_render_frozen_lake(self):
     
