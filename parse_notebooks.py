@@ -37,8 +37,8 @@ The exercises found here are immediately followed by their solutions. We encoura
 to attempt a solution before viewing the proposed solutions. To execute the code,
 please install all necessary dependencies first (keep this notebook open if you want
 to run multiple exercises without having to reinstall dependencies).
-If for some reason this notebook can't request the required resources for Ray to run,
-please consider restarting the Colab Runtime and try again.\n\n
+**If for some reason this notebook can't request the required resources for Ray to run,
+please consider restarting the Colab Runtime and trying again.**\n\n
 # %%
 ! pip install ray[rllib]>=2.0.0 torch matplotlib 
 ! pip install gym==0.23.1 gym-toytext==0.25.0 pygame==2.1.0
