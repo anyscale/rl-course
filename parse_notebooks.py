@@ -32,19 +32,21 @@ def generate_course_content(locale="en"):
     with open(all_exercises_file, "w") as ex_file:
         ex_file.write("""# %% [markdown]\n\n
 # Exercises and solutions for 
-[Applied RL with RLlib](https://applied-rl-course.netlify.app/).\n\n
-The exercises found here are immediately followed by their solutions. We encourage you 
-to attempt a solution before viewing the proposed solutions. To execute the code,
-please install all necessary dependencies first (keep this notebook open if you want
-to run multiple exercises without having to reinstall dependencies).
-**If for some reason this notebook can't request the required resources for Ray to run,
-please consider restarting the Colab Runtime and trying again.**\n\n
+[Applied RL with RLlib](https://applied-rl-course.netlify.app/). 
+The exercises found here are immediately followed by their solutions.\n\n
+**NOTE: You must run the top cells to initialize before running the exercises!**
+Keep this notebook open if you want to run multiple exercises without having to 
+re-initialize. If for some reason this notebook can't request the required resources 
+for Ray to run, please consider restarting the Colab Runtime and trying again.\n\n
 # %%
+# RUN THESE THREE CELLS FIRST
 ! pip install ray[rllib]>=2.0.0 torch matplotlib 
 ! pip install gym==0.23.1 gym-toytext==0.25.0 pygame==2.1.0
 # %%
+# RUN THESE THREE CELLS FIRST
 !git clone https://github.com/maxpumperla/rl-course-exercises
 # %%
+# RUN THESE THREE CELLS FIRST
 %cp -r rl-course-exercises/utils.py .
 %cp -r rl-course-exercises/envs.py .
 
