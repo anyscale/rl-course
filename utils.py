@@ -349,7 +349,7 @@ def parse_exercise(
             else:
                 content += f"""**Please go to <a href="{EXERCISE_NB}" 
 target="_blank">the exercise notebook for this course</a>
-next, solve {exercise_name}, and come back here! Make sure to run the cells at the top of the Colab first to install dependencies. {OPEN_IN_COLAB}**\n\n"""
+next, run/solve {exercise_name}, and come back here! {OPEN_IN_COLAB}**\n\n"""
             has_exercise = True
             source = source.strip("# EXERCISE")
             with open(all_exercises_file, "a") as f:
