@@ -6,12 +6,12 @@
         "description": "This course teaches you the basics of reinforcement learning in an applied fashion, by leveraging the production-grade RL framework Ray RLlib. Enjoy!",
         "bio": "© 2022. Proudly built by the Ray team. Course platform based on the SpaCy course by Ines Montani.",
         "footerLinks": [
-            { "text": "Website",
-                "url": "https://applied-rl-course.netlify.app/"
-            },
             {
                 "text": "Source Code",
-                "url": "https://github.com/ray-project/ray"
+                "url": "https://github.com/anyscale/rl-course"
+            },
+            { "text": "Report Bugs or Provide Feedback",
+                "url": "https://github.com/anyscale/rl-course/issues"
             },
             {
                 "text": "Course Platform",
