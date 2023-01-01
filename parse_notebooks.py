@@ -40,7 +40,7 @@ re-initialize. If for some reason this notebook can't request the required resou
 for Ray to run, please consider restarting the Colab Runtime and trying again.\n\n
 # %%
 # RUN THESE THREE CELLS FIRST
-! pip install ray[rllib]>=2.0.0 torch matplotlib 
+! pip install ray[rllib]==2.0.0 torch matplotlib 
 ! pip install gym==0.23.1 gym-toytext==0.25.0 pygame==2.1.0
 # %%
 # RUN THESE THREE CELLS FIRST
